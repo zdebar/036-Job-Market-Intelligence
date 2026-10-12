@@ -1,7 +1,6 @@
-BEGIN;
-
 -- Squashed initial schema based on migrations 001-006 from 035-Job-Data.
 -- This file represents the final schema for a fresh 036 database.
+-- Transaction boundaries are managed by the database migration runner.
 
 CREATE TABLE sources (
     id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -261,5 +260,3 @@ CREATE INDEX raw_ingestion_runs_source_id_idx
     ON raw_ingestion_runs (source_id);
 CREATE INDEX raw_ingestion_record_errors_run_id_idx
     ON raw_ingestion_record_errors (raw_ingestion_run_id);
-
-COMMIT;

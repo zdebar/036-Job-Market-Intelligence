@@ -1,6 +1,5 @@
-BEGIN;
-
 -- Reference data migrated from 035-Job-Data.
+-- Transaction boundaries are managed by the database seed runner.
 
 INSERT INTO sources (name, source_key)
 VALUES
@@ -17,7 +16,6 @@ VALUES
     ('Ataccama'),
     ('Apify')
 ON CONFLICT (name) DO NOTHING;
-
 INSERT INTO roles (name)
 VALUES
     ('Data Engineer'),
@@ -141,5 +139,4 @@ VALUES
     ('Brno, Czechia'),
     ('Ostrava, Czechia')
 ON CONFLICT (name) DO NOTHING;
-
-COMMIT;
+-- End of reference seed data.

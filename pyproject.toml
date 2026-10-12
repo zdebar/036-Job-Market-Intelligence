@@ -8,10 +8,13 @@ authors = [
 ]
 requires-python = ">=3.12"
 dependencies = [
+    "python-dotenv>=1.1.1",
     "psycopg[binary]>=3.3.6",
 ]
 
 [project.scripts]
+db-migrate = "job_market_intelligence.migrations:main"
+db-seed = "job_market_intelligence.seeds:main"
 job-market-intelligence = "job_market_intelligence:main"
 
 [build-system]
