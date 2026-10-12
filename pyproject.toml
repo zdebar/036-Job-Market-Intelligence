@@ -7,7 +7,9 @@ authors = [
     { name = "zdebar", email = "zdebarth@gmail.com" }
 ]
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "psycopg[binary]>=3.3.6",
+]
 
 [project.scripts]
 job-market-intelligence = "job_market_intelligence:main"

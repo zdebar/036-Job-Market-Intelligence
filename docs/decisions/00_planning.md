@@ -41,25 +41,27 @@ zdroje
 | Azure                   | Cloudové uložení, běh a monitoring     |
 | LLM API                 | Pozdější AI extrakce                   |
 
-## Postup fází
+## Postup hlavních fází
 
-| Fáze | Stav | Název                        | Výsledek                                             |
-| ---- | ---- | ---------------------------- | ---------------------------------------------------- |
-| 0    | [x]  | Planning                     | Cíle, pojmy, rozsah a rozhodnutí                     |
-| 1    | [x]  | Project foundation           | Git, Python, uv, testy, linting a základní struktura |
-| 2    | [ ]  | Database foundation          | PostgreSQL, Docker, migrace a seed data              |
-| 3    | [ ]  | Basic ingestion              | Stažení dat z prvního zdroje                         |
-| 4    | [ ]  | Raw storage                  | Neměnná response data a metadata                     |
-| 5    | [ ]  | Extraction and normalization | Převod zdrojových dat na společný formát             |
-| 6    | [ ]  | Data quality                 | Kontroly validnosti, úplnosti a konzistence          |
-| 7    | [ ]  | SQL analytics                | První užitečné dotazy a reporty                      |
-| 8    | [ ]  | Data modelling / dbt         | Staging, facts, dimensions, bridges a Gold views     |
-| 9    | [ ]  | Dashboard                    | Power BI dashboard nad analytickou vrstvou           |
-| 10   | [ ]  | Cloud foundation             | Azure Storage, Azure PostgreSQL a secrets            |
-| 11   | [ ]  | Cloud orchestration          | Automatické běhy, retry, logování a monitoring       |
-| 12   | [ ]  | AI extraction                | LLM extrakce a validace strukturovaných údajů        |
-| 13   | [ ]  | Optional technologies        | Databricks, PySpark, embeddings a semantic search    |
-| 14   | [ ]  | Production hardening         | Bezpečnost, náklady, zálohy a provoz                 |
+| Fáze | Stav | Název                          | Výsledek                                             |
+| ---- | ---- | ------------------------------ | ---------------------------------------------------- |
+| 0    | [x]  | Planning                       | Cíle, pojmy, rozsah a rozhodnutí                     |
+| 1    | [x]  | Project foundation             | Git, Python, uv, testy, linting a základní struktura |
+| 2    | [ ]  | Database foundation            | PostgreSQL, Docker, migrace a seed data              |
+| 3    | [ ]  | Basic ingestion                | Stažení dat, Raw Storage                             |
+| 4    | [ ]  | Extraction and normalization   | Převod zdrojových dat na společný formát             |
+| 5    | [ ]  | SQL analytics a data modellig  | První užitečné dotazy a reporty                      |
+| 6    | [ ]  | Data modelling / dbt           | Staging, facts, dimensions, bridges a Gold views     |
+| 7    | [ ]  | Dashboard                      | Power BI dashboard nad analytickou vrstvou           |
+| 8    | [ ]  | Cloud foundation               | Azure Storage, Azure PostgreSQL a secrets            |
+| 9    | [ ]  | Cloud orchestration            | Automatické běhy, retry, logování a monitoring       |
+| 10   | [ ]  | AI extraction                  | LLM extrakce a validace strukturovaných údajů        |
+
+## Postup volitelných fází
+| Fáze | Stav | Název                          | Výsledek                                             |
+| ---- | ---- | ------------------------------ | ---------------------------------------------------- |
+| 11   | [ ]  | Optional technologies          | Databricks, PySpark, embeddings a semantic search    |
+
 
 ## Principy
 
