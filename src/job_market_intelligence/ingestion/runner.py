@@ -9,7 +9,7 @@ from collections.abc import Callable
 from pathlib import Path
 
 from job_market_intelligence.ingestion.config import load_toml, resolve_project_path
-from job_market_intelligence.ingestion.sources import greenhouse
+from job_market_intelligence.ingestion.sources import ashby, greenhouse, lever
 
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 DEFAULT_CONFIG_PATH = PROJECT_ROOT / "config" / "ingestion.toml"
@@ -18,7 +18,9 @@ DownloadHandler = Callable[[Path, Path], list[Path]]
 DryRunHandler = Callable[[Path, Path], None]
 
 SOURCE_HANDLERS: dict[str, tuple[DownloadHandler, DryRunHandler]] = {
+    "ashby": (ashby.download, ashby.print_dry_run),
     "greenhouse": (greenhouse.download, greenhouse.print_dry_run),
+    "lever": (lever.download, lever.print_dry_run),
 }
 
 

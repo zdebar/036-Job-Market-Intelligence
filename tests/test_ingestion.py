@@ -19,6 +19,17 @@ def test_runner_dry_run_reads_greenhouse_configuration(capsys) -> None:
     assert "greenhouse_mews" in output
 
 
+def test_runner_configuration_lists_all_initial_sources(capsys) -> None:
+    run_ingestion(CONFIG_PATH, dry_run=True)
+
+    output = capsys.readouterr().out
+    assert "Source: greenhouse" in output
+    assert "Source: lever" in output
+    assert "Source: ashby" in output
+    assert "lever_ataccama" in output
+    assert "ashby_apify" in output
+
+
 def test_save_raw_response_writes_documented_layout(tmp_path) -> None:
     payload = b'{"jobs":[]}'
     response = HttpResponse(

@@ -28,9 +28,9 @@ not overwrite an earlier response, even when the payload is identical.
 
 ## Initial implementation
 
-The first implementation uses the Greenhouse Job Board API. A shared HTTP
-client, raw-storage helper, TOML configuration loader, and ingestion runner are
-adapted from project 035. Lever and Ashby adapters remain later additions.
+The initial implementation uses the Greenhouse Job Board API, Lever Postings
+API, and Ashby job-board API. A shared HTTP client, raw-storage helper, TOML
+configuration loader, and ingestion runner are adapted from project 035.
 
 Run a preview with:
 

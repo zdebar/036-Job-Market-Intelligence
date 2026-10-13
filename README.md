@@ -46,10 +46,10 @@ Seed files are tracked as well and must use a numbered filename, for example:
 
 ## Basic ingestion
 
-The first ingestion adapter downloads complete Greenhouse board responses and
-saves them as immutable raw files. Configure boards in
-`config/sources/greenhouse.toml`, then preview the requests without network
-access:
+The ingestion adapters download complete Greenhouse, Lever, and Ashby board
+responses and save them as immutable raw files. Configure boards in the
+corresponding files under `config/sources/`, then preview the requests without
+network access:
 
 ```powershell
 uv run job-market-ingest --dry-run
