@@ -26,11 +26,11 @@ sources
 
 ## Main technologies
 
-| Technology              | Role                                   |
-| ----------------------- | -------------------------------------- |
-| Git and GitHub           | Version control, collaboration, and CI/CD |
-| Python and uv            | Application, parsing, and environment management |
-| httpx                    | HTTP communication with sources        |
+| Technology                | Role                                   |
+| ------------------------- | -------------------------------------- |
+| Git and GitHub            | Version control, collaboration, and CI/CD |
+| Python and uv             | Application, parsing, and environment management |
+| httpx                     | HTTP communication with sources        |
 | Docker and Docker Compose | Local service runtime                 |
 | PostgreSQL               | Operational and analytical database    |
 | SQL migrations           | Database schema change management      |
@@ -42,18 +42,18 @@ sources
 
 ## Main phases
 
-| Phase | Status | Name                         | Outcome                                             |
-| ----- | ------ | ---------------------------- | --------------------------------------------------- |
-| 0     | [x]    | Planning                     | Objectives, terminology, scope, and decisions       |
-| 1     | [x]    | Project foundation           | Git, Python, uv, tests, linting, and basic structure |
-| 2     | [ ]    | Database foundation          | PostgreSQL, Docker, migrations, and seed data       |
-| 3     | [ ]    | Basic ingestion              | Data download and raw storage                       |
-| 4     | [ ]    | Extraction and normalization | Conversion of source data to a common format        |
-| 5     | [ ]    | SQL analytics and data modeling | First useful queries and reports                 |
-| 6     | [ ]    | Data modeling / dbt          | Staging, facts, dimensions, bridges, and Gold views |
-| 7     | [ ]    | Dashboard                   | Power BI dashboard on the analytical layer          |
-| 8     | [ ]    | Cloud foundation             | Azure Storage, Azure PostgreSQL, and secrets        |
-| 9     | [ ]    | Cloud orchestration          | Automated runs, retries, logging, and monitoring    |
+| Phase | Status | Name                            | Outcome                                              |
+| ----- | ------ | ------------------------------- | ---------------------------------------------------- |
+| 0     | [x]    | Planning                        | Objectives, terminology, scope, and decisions        |
+| 1     | [x]    | Project foundation              | Git, Python, uv, tests, linting, and basic structure |
+| 2     | [x]    | Database foundation             | PostgreSQL, Docker, migrations, and seed data        |
+| 3     | [ ]    | Basic ingestion                 | Data download and raw storage                        |
+| 4     | [ ]    | Extraction and normalization    | Conversion of source data to a common format         |
+| 5     | [ ]    | SQL analytics and data modeling | First useful queries and reports                     |
+| 6     | [ ]    | Data modeling / dbt             | Staging, facts, dimensions, bridges, and Gold views  |
+| 7     | [ ]    | Dashboard                       | Power BI dashboard on the analytical layer           |
+| 8     | [ ]    | Cloud foundation                | Azure Storage, Azure PostgreSQL, and secrets         |
+| 9     | [ ]    | Cloud orchestration             | Automated runs, retries, logging, and monitoring     |
 
 ## Optional phases
 
