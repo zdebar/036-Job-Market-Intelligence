@@ -32,6 +32,9 @@ VALUES
     ('BI Developer')
 ON CONFLICT (name) DO NOTHING;
 
+-- Department labels are provider-specific and will be populated after
+-- canonicalization rules are defined.
+
 INSERT INTO skills (name)
 VALUES
     ('Python'),

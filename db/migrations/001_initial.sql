@@ -18,6 +18,11 @@ CREATE TABLE roles (
     name TEXT NOT NULL UNIQUE
 );
 
+CREATE TABLE departments (
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    name TEXT NOT NULL UNIQUE
+);
+
 CREATE TABLE skills (
     id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     name TEXT NOT NULL UNIQUE
@@ -91,6 +96,12 @@ CREATE TABLE job_posting_locations (
     job_posting_id BIGINT NOT NULL REFERENCES job_postings(id) ON DELETE CASCADE,
     location_id BIGINT NOT NULL REFERENCES locations(id),
     PRIMARY KEY (job_posting_id, location_id)
+);
+
+CREATE TABLE job_posting_departments (
+    job_posting_id BIGINT NOT NULL REFERENCES job_postings(id) ON DELETE CASCADE,
+    department_id BIGINT NOT NULL REFERENCES departments(id),
+    PRIMARY KEY (job_posting_id, department_id)
 );
 
 CREATE TABLE job_posting_work_modes (
@@ -243,6 +254,8 @@ CREATE INDEX job_postings_content_fingerprint_idx
     ON job_postings (content_fingerprint);
 CREATE INDEX job_posting_locations_location_id_idx
     ON job_posting_locations (location_id);
+CREATE INDEX job_posting_departments_department_id_idx
+    ON job_posting_departments (department_id);
 CREATE INDEX job_posting_work_modes_work_mode_id_idx
     ON job_posting_work_modes (work_mode_id);
 CREATE INDEX job_posting_employment_options_relation_id_idx

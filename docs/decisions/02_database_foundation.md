@@ -13,6 +13,9 @@ and seed data.
   `DATABASE_URL`; `.env.example` documents the required variables.
 - The initial schema is stored in `db/migrations/001_initial.sql`. It is a
   squashed version of the required migrations from project 035.
+- Department labels are stored in a shared `departments` table and connected
+  to postings through `job_posting_departments`. Provider-specific team labels
+  remain in the raw JSON until a stable cross-source model is justified.
 - Seed data is stored separately in `db/seeds/001_job_offers.sql`.
 - Migration and seed files are applied by the Python runner:
 
