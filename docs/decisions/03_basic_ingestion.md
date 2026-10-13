@@ -25,3 +25,24 @@ Each board and run has its own directory:
 
 The run_id is explicit and unique. A repeated download is a new run and does
 not overwrite an earlier response, even when the payload is identical.
+
+## Initial implementation
+
+The first implementation uses the Greenhouse Job Board API. A shared HTTP
+client, raw-storage helper, TOML configuration loader, and ingestion runner are
+adapted from project 035. Lever and Ashby adapters remain later additions.
+
+Run a preview with:
+
+```text
+uv run job-market-ingest --dry-run
+```
+
+Run the configured downloads with:
+
+```text
+uv run job-market-ingest
+```
+
+Raw responses are not committed to Git. They are the input for later parsing
+and normalization phases.

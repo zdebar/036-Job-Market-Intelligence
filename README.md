@@ -43,3 +43,25 @@ applied migration; create a new file in `db/migrations/` for each new change.
 Seed files are tracked as well and must use a numbered filename, for example:
 
 `002_more_reference_data.sql`.
+
+## Basic ingestion
+
+The first ingestion adapter downloads complete Greenhouse board responses and
+saves them as immutable raw files. Configure boards in
+`config/sources/greenhouse.toml`, then preview the requests without network
+access:
+
+```powershell
+uv run job-market-ingest --dry-run
+```
+
+Run the configured downloads with:
+
+```powershell
+uv run job-market-ingest
+```
+
+Each run creates a new directory under
+`data/01_bronze/<source_key>/<date>/<run_id>/` containing `response.json` and
+`metadata.json`. Raw data is ignored by Git and is not overwritten by later
+runs.
