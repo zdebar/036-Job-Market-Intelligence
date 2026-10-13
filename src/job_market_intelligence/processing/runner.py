@@ -60,8 +60,9 @@ def run_processing(
     config_path: Path,
     selected_sources: list[str] | None = None,
     dry_run: bool = False,
+    reprocess_processed: bool = False,
 ) -> int:
-    """Process all configured raw runs and return the number of processed runs."""
+    """Process configured raw runs and return the number of processed runs."""
     runner_config = load_toml(config_path)
     selected_ids = set(selected_sources or [])
     source_entries = runner_config.get("sources", [])
@@ -76,7 +77,7 @@ def run_processing(
             print(f"[{source_id}] {run_directory}")
         return 0
 
-    return _process_work_items(work_items)
+    return _process_work_items(work_items, reprocess_processed)
 
 
 def _validate_source_selection(
@@ -145,7 +146,10 @@ def _enabled_source_keys(boards: Any) -> list[str]:
     ]
 
 
-def _process_work_items(work_items: list[WorkItem]) -> int:
+def _process_work_items(
+    work_items: list[WorkItem],
+    reprocess_processed: bool,
+) -> int:
     load_dotenv(PROJECT_ROOT / ".env")
     database_url = os.getenv("DATABASE_URL")
     if not database_url:
@@ -157,7 +161,7 @@ def _process_work_items(work_items: list[WorkItem]) -> int:
         repository = ProcessingRepository(connection)
         for source_id, run_directory in work_items:
             parser = _get_parser(parser_cache, source_id)
-            if _process_run(repository, parser, run_directory):
+            if _process_run(repository, parser, run_directory, reprocess_processed):
                 processed_count += 1
     return processed_count
 
@@ -174,6 +178,7 @@ def _process_run(
     repository: ProcessingRepository,
     parser: Parser,
     run_directory: Path,
+    reprocess_processed: bool,
 ) -> bool:
     metadata = _read_json(run_directory / "metadata.json")
     payload = _read_json(run_directory / "response.json")
@@ -195,9 +200,11 @@ def _process_run(
         payload_sha256=optional_text(metadata.get("payload_sha256")),
     )
     repository.connection.commit()
-    if status == "processed":
+    if status == "processed" and not reprocess_processed:
         print(f"[{source_key}] Skipping processed run {run_id}")
         return False
+    if status == "processed":
+        print(f"[{source_key}] Reprocessing processed run {run_id}")
 
     repository.mark_processing(database_run_id)
     repository.connection.commit()
@@ -289,6 +296,11 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="List discovered raw runs without connecting to PostgreSQL.",
     )
+    parser.add_argument(
+        "--reprocess-processed",
+        action="store_true",
+        help="Reprocess runs already marked as processed, for example after a processing change.",
+    )
     return parser.parse_args()
 
 
@@ -300,6 +312,7 @@ def main() -> int:
             args.config,
             selected_sources=args.selected_sources,
             dry_run=args.dry_run,
+            reprocess_processed=args.reprocess_processed,
         )
     except (KeyError, OSError, RuntimeError, ValueError) as error:
         print(f"Processing failed: {error}", file=sys.stderr)

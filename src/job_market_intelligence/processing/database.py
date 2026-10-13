@@ -186,6 +186,8 @@ class ProcessingRepository:
             raise RuntimeError("Could not upsert job posting")
         posting_id = int(row[0])
         self._replace_child_records(posting_id, record)
+        canonical_job_id = self._ensure_canonical_job(posting_id)
+        self._refresh_canonical_job_ranking(canonical_job_id)
         return posting_id
 
     def mark_missing_postings_inactive(
@@ -193,17 +195,35 @@ class ProcessingRepository:
         *,
         source_key: str,
         retrieved_at: datetime,
-    ) -> None:
-        self.connection.execute(
+    ) -> int:
+        result = self.connection.execute(
             """
             UPDATE job_postings
             SET status = 'inactive', updated_at = now()
             WHERE source_id = (SELECT id FROM sources WHERE source_key = %s)
               AND status = 'active'
               AND last_seen_at < %s
+            RETURNING id
             """,
             (source_key, retrieved_at),
         )
+        posting_ids = [int(row[0]) for row in result.fetchall()]
+        canonical_ids: set[int] = set()
+        for posting_id in posting_ids:
+            row = self.connection.execute(
+                """
+                SELECT canonical_job_id
+                FROM job_posting_sources
+                WHERE job_posting_id = %s
+                """,
+                (posting_id,),
+            ).fetchone()
+            if row is not None:
+                canonical_ids.add(int(row[0]))
+
+        for canonical_id in canonical_ids:
+            self._refresh_canonical_job_ranking(canonical_id)
+        return len(posting_ids)
 
     def _replace_child_records(
         self,
@@ -358,6 +378,222 @@ class ProcessingRepository:
                     compensation.salary_period,
                 ),
             )
+
+    def _ensure_canonical_job(self, posting_id: int) -> int:
+        existing = self.connection.execute(
+            """
+            SELECT canonical_job_id
+            FROM job_posting_sources
+            WHERE job_posting_id = %s
+            """,
+            (posting_id,),
+        ).fetchone()
+        if existing is not None:
+            return int(existing[0])
+
+        canonical_id = self._find_canonical_match(posting_id)
+        match_method = (
+            "algorithmic_match" if canonical_id is not None else "new_canonical_job"
+        )
+        if canonical_id is None:
+            row = self.connection.execute(
+                "INSERT INTO canonical_jobs DEFAULT VALUES RETURNING id"
+            ).fetchone()
+            if row is None:
+                raise RuntimeError(f"Could not create canonical job for {posting_id}")
+            canonical_id = int(row[0])
+
+        self.connection.execute(
+            """
+            INSERT INTO job_posting_sources (
+                canonical_job_id, job_posting_id, match_method, matched_at
+            )
+            VALUES (%s, %s, %s, now())
+            """,
+            (canonical_id, posting_id, match_method),
+        )
+        return canonical_id
+
+    def _find_canonical_match(self, posting_id: int) -> int | None:
+        current = self.connection.execute(
+            """
+            SELECT company_id, role_id, seniority_level_id, content_fingerprint
+            FROM job_postings
+            WHERE id = %s
+            """,
+            (posting_id,),
+        ).fetchone()
+        if current is None:
+            raise RuntimeError(f"Posting does not exist: {posting_id}")
+
+        company_id, role_id, seniority_id, fingerprint = current
+        if fingerprint:
+            exact_matches = self._fingerprint_candidates(
+                posting_id, int(company_id), str(fingerprint)
+            )
+            if len(exact_matches) == 1:
+                return exact_matches[0]
+            if exact_matches:
+                return None
+
+        if role_id is None or not self._has_locations(posting_id):
+            return None
+
+        fallback_matches = self._fallback_candidates(
+            posting_id,
+            int(company_id),
+            int(role_id),
+            int(seniority_id) if seniority_id is not None else None,
+        )
+        return fallback_matches[0] if len(fallback_matches) == 1 else None
+
+    def _fingerprint_candidates(
+        self,
+        posting_id: int,
+        company_id: int,
+        fingerprint: str,
+    ) -> list[int]:
+        rows = self.connection.execute(
+            """
+            SELECT DISTINCT links.canonical_job_id
+            FROM job_postings AS postings
+            JOIN job_posting_sources AS links ON links.job_posting_id = postings.id
+            WHERE postings.id <> %s
+              AND postings.company_id = %s
+              AND postings.content_fingerprint = %s
+            """,
+            (posting_id, company_id, fingerprint),
+        ).fetchall()
+        return [int(row[0]) for row in rows]
+
+    def _fallback_candidates(
+        self,
+        posting_id: int,
+        company_id: int,
+        role_id: int,
+        seniority_id: int | None,
+    ) -> list[int]:
+        rows = self.connection.execute(
+            """
+            SELECT DISTINCT links.canonical_job_id
+            FROM job_postings AS postings
+            JOIN job_posting_sources AS links ON links.job_posting_id = postings.id
+            WHERE postings.id <> %s
+              AND postings.company_id = %s
+              AND postings.role_id = %s
+              AND (
+                  postings.seniority_level_id IS NULL
+                  OR CAST(%s AS BIGINT) IS NULL
+                  OR postings.seniority_level_id = CAST(%s AS BIGINT)
+              )
+              AND ARRAY(
+                  SELECT location_id
+                  FROM job_posting_locations
+                  WHERE job_posting_id = postings.id
+                  ORDER BY location_id
+              ) = ARRAY(
+                  SELECT location_id
+                  FROM job_posting_locations
+                  WHERE job_posting_id = %s
+                  ORDER BY location_id
+              )
+            """,
+            (
+                posting_id,
+                company_id,
+                role_id,
+                seniority_id,
+                seniority_id,
+                posting_id,
+            ),
+        ).fetchall()
+        return [int(row[0]) for row in rows]
+
+    def _has_locations(self, posting_id: int) -> bool:
+        row = self.connection.execute(
+            """
+            SELECT 1
+            FROM job_posting_locations
+            WHERE job_posting_id = %s
+            LIMIT 1
+            """,
+            (posting_id,),
+        ).fetchone()
+        return row is not None
+
+    def _refresh_canonical_job_ranking(self, canonical_id: int) -> None:
+        self.connection.execute(
+            """
+            UPDATE job_posting_sources
+            SET selection_rank = NULL
+            WHERE canonical_job_id = %s
+            """,
+            (canonical_id,),
+        )
+        self.connection.execute(
+            """
+            WITH ranked AS (
+                SELECT
+                    links.job_posting_id,
+                    ROW_NUMBER() OVER (
+                        ORDER BY
+                            COALESCE(
+                                postings.source_updated_at,
+                                postings.retrieved_at
+                            ) DESC NULLS LAST,
+                            (
+                                CASE WHEN postings.role_id IS NOT NULL THEN 1 ELSE 0 END
+                                + CASE WHEN postings.seniority_level_id IS NOT NULL THEN 1 ELSE 0 END
+                                + CASE WHEN postings.source_url IS NOT NULL THEN 1 ELSE 0 END
+                                + CASE WHEN EXISTS (
+                                    SELECT 1
+                                    FROM job_posting_locations AS locations
+                                    WHERE locations.job_posting_id = postings.id
+                                ) THEN 1 ELSE 0 END
+                                + CASE WHEN EXISTS (
+                                    SELECT 1
+                                    FROM job_posting_work_modes AS work_modes
+                                    WHERE work_modes.job_posting_id = postings.id
+                                ) THEN 1 ELSE 0 END
+                                + CASE WHEN EXISTS (
+                                    SELECT 1
+                                    FROM job_skill_requirements AS skills
+                                    WHERE skills.job_posting_id = postings.id
+                                ) THEN 1 ELSE 0 END
+                                + CASE WHEN EXISTS (
+                                    SELECT 1
+                                    FROM job_posting_compensations AS compensation
+                                    WHERE compensation.job_posting_id = postings.id
+                                ) THEN 1 ELSE 0 END
+                                + CASE WHEN EXISTS (
+                                    SELECT 1
+                                    FROM job_posting_employment_options AS employment
+                                    WHERE employment.job_posting_id = postings.id
+                                ) THEN 1 ELSE 0 END
+                            ) DESC,
+                            postings.id ASC
+                    )::INTEGER AS selection_rank
+                FROM job_posting_sources AS links
+                JOIN job_postings AS postings
+                    ON postings.id = links.job_posting_id
+                WHERE links.canonical_job_id = %s
+                  AND postings.status = 'active'
+            )
+            UPDATE job_posting_sources AS links
+            SET selection_rank = ranked.selection_rank
+            FROM ranked
+            WHERE links.job_posting_id = ranked.job_posting_id
+            """,
+            (canonical_id,),
+        )
+        self.connection.execute(
+            """
+            UPDATE canonical_jobs
+            SET updated_at = now()
+            WHERE id = %s
+            """,
+            (canonical_id,),
+        )
 
     def _required_id(self, table: str, column: str, value: str) -> int:
         identifier = self._optional_id(table, column, value)

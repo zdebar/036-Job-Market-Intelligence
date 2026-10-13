@@ -70,6 +70,13 @@ Process stored raw responses into PostgreSQL with:
 uv run job-market-parse
 ```
 
+To backfill existing processed runs after a processing change, explicitly
+request reprocessing:
+
+```powershell
+uv run job-market-parse --reprocess-processed
+```
+
 Preview discovered raw runs without a database connection:
 
 ```powershell
@@ -79,6 +86,10 @@ uv run job-market-parse --dry-run
 The processing runner is idempotent: a raw run recorded as `processed` is
 skipped on later executions. Record-level failures are stored in
 `raw_ingestion_record_errors` and do not discard the original raw response.
+During persistence, new postings are assigned to a canonical job when an
+unambiguous cross-source match exists. Active canonical postings receive a
+deterministic primary-posting rank; postings missing from a successful full
+source run become inactive.
 
 ## SQL analytics
 

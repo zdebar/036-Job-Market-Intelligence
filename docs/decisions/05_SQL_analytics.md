@@ -15,7 +15,7 @@ Reports cover postings by company, source, role, department, skill, work mode,
 location, and freshness, plus posting detail.
 
 Quality checks cover ingestion counts, record errors, normalization coverage,
-bridge integrity, and posting completeness.
+bridge integrity, posting completeness, canonical links, and posting ranking.
 
 ## Decisions
 
@@ -23,7 +23,8 @@ bridge integrity, and posting completeness.
 - Keep `raw_advertisement` for detail and debugging only.
 - Do not change the operational schema for individual reports.
 - Defer dbt models and the Power BI semantic model to phase 06.
-- Defer canonical-job matching and ranking checks until implemented.
+- Canonical matching and ranking are operational processing concerns; SQL
+  checks validate their persisted results.
 
 ## Done when
 
