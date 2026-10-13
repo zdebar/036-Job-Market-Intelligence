@@ -79,3 +79,25 @@ uv run job-market-parse --dry-run
 The processing runner is idempotent: a raw run recorded as `processed` is
 skipped on later executions. Record-level failures are stored in
 `raw_ingestion_record_errors` and do not discard the original raw response.
+
+## SQL analytics
+
+Phase 05 contains read-only reports in `sql/reports/` and data-quality checks
+in `sql/quality/`. Run all reports or checks with:
+
+```powershell
+uv run job-market-report
+uv run job-market-quality
+```
+
+Run one SQL file by repeating the `--file` option when needed:
+
+```powershell
+uv run job-market-report --file 001_active_jobs_by_company.sql
+uv run job-market-quality --file 003_normalization_coverage.sql
+```
+
+Reports use the normalized tables and bridge tables as their primary source.
+The `raw_advertisement` JSONB column is retained for detail and debugging;
+canonical-job matching and the final BI semantic model are deferred to later
+phases.

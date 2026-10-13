@@ -49,7 +49,7 @@ sources
 | 2     | [x]    | Database foundation             | PostgreSQL, Docker, migrations, and seed data        |
 | 3     | [x]    | Basic ingestion                 | Data download and raw storage                        |
 | 4     | [x]    | Extraction and normalization    | Conversion of source data to a common format         |
-| 5     | [ ]    | SQL analytics                   | First useful queries and reports                     |
+| 5     | [x]    | SQL analytics                   | First useful queries and reports                     |
 | 6     | [ ]    | Data modeling / dbt             | Staging, facts, dimensions, bridges, and Gold views  |
 | 7     | [ ]    | Dashboard                       | Power BI dashboard on the analytical layer           |
 | 8     | [ ]    | Cloud foundation                | Azure Storage, Azure PostgreSQL, and secrets         |

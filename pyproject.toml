@@ -18,6 +18,8 @@ db-migrate = "job_market_intelligence.migrations:main"
 db-seed = "job_market_intelligence.seeds:main"
 job-market-ingest = "job_market_intelligence.ingestion.runner:main"
 job-market-parse = "job_market_intelligence.processing.runner:main"
+job-market-report = "job_market_intelligence.analytics.runner:report_main"
+job-market-quality = "job_market_intelligence.analytics.runner:quality_main"
 job-market-intelligence = "job_market_intelligence:main"
 
 [build-system]
