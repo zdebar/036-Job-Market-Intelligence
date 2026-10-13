@@ -1,0 +1,27 @@
+[[seniority_levels]]
+name = "Intern"
+aliases = ["Intern", "Internship"]
+
+[[seniority_levels]]
+name = "Junior"
+aliases = ["Junior", "Jr", "Entry-level", "Entry level"]
+
+[[seniority_levels]]
+name = "Mid-level"
+aliases = ["Mid-level", "Mid level", "Intermediate"]
+
+[[seniority_levels]]
+name = "Senior"
+aliases = ["Senior", "Sr"]
+
+[[seniority_levels]]
+name = "Lead"
+aliases = ["Lead"]
+
+[[seniority_levels]]
+name = "Staff"
+aliases = ["Staff"]
+
+[[seniority_levels]]
+name = "Principal"
+aliases = ["Principal"]

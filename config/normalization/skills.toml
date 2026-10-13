@@ -1,0 +1,171 @@
+[[skills]]
+name = "Python"
+aliases = ["Python"]
+
+[[skills]]
+name = "SQL"
+aliases = ["SQL"]
+
+[[skills]]
+name = "R"
+aliases = ["R"]
+
+[[skills]]
+name = "Java"
+aliases = ["Java"]
+
+[[skills]]
+name = "Scala"
+aliases = ["Scala"]
+
+[[skills]]
+name = "JavaScript"
+aliases = ["JavaScript"]
+
+[[skills]]
+name = "TypeScript"
+aliases = ["TypeScript"]
+
+[[skills]]
+name = "React"
+aliases = ["React"]
+
+[[skills]]
+name = "PostgreSQL"
+aliases = ["PostgreSQL", "Postgres"]
+
+[[skills]]
+name = "MySQL"
+aliases = ["MySQL"]
+
+[[skills]]
+name = "MongoDB"
+aliases = ["MongoDB"]
+
+[[skills]]
+name = "Redis"
+aliases = ["Redis"]
+
+[[skills]]
+name = "Pandas"
+aliases = ["Pandas"]
+
+[[skills]]
+name = "NumPy"
+aliases = ["NumPy", "Numpy"]
+
+[[skills]]
+name = "Apache Spark"
+aliases = ["Apache Spark", "Spark"]
+
+[[skills]]
+name = "PySpark"
+aliases = ["PySpark"]
+
+[[skills]]
+name = "Apache Kafka"
+aliases = ["Apache Kafka", "Kafka"]
+
+[[skills]]
+name = "dbt"
+aliases = ["dbt"]
+
+[[skills]]
+name = "Apache Airflow"
+aliases = ["Apache Airflow", "Airflow"]
+
+[[skills]]
+name = "Databricks"
+aliases = ["Databricks"]
+
+[[skills]]
+name = "Azure"
+aliases = ["Azure"]
+
+[[skills]]
+name = "AWS"
+aliases = ["AWS", "Amazon Web Services"]
+
+[[skills]]
+name = "Google Cloud"
+aliases = ["Google Cloud", "GCP"]
+
+[[skills]]
+name = "Docker"
+aliases = ["Docker"]
+
+[[skills]]
+name = "Docker Compose"
+aliases = ["Docker Compose"]
+
+[[skills]]
+name = "Kubernetes"
+aliases = ["Kubernetes", "K8s"]
+
+[[skills]]
+name = "Terraform"
+aliases = ["Terraform"]
+
+[[skills]]
+name = "Linux"
+aliases = ["Linux"]
+
+[[skills]]
+name = "Git"
+aliases = ["Git"]
+
+[[skills]]
+name = "GitHub Actions"
+aliases = ["GitHub Actions"]
+
+[[skills]]
+name = "Power BI"
+aliases = ["Power BI"]
+
+[[skills]]
+name = "FastAPI"
+aliases = ["FastAPI"]
+
+[[skills]]
+name = "REST API"
+aliases = ["REST API", "RESTful API"]
+
+[[skills]]
+name = "JSON"
+aliases = ["JSON"]
+
+[[skills]]
+name = "Machine Learning"
+aliases = ["Machine Learning"]
+
+[[skills]]
+name = "Deep Learning"
+aliases = ["Deep Learning"]
+
+[[skills]]
+name = "Artificial Intelligence"
+aliases = ["Artificial Intelligence", "AI"]
+
+[[skills]]
+name = "scikit-learn"
+aliases = ["scikit-learn", "scikit learn"]
+
+[[skills]]
+name = "PyTorch"
+aliases = ["PyTorch"]
+
+[[skills]]
+name = "TensorFlow"
+aliases = ["TensorFlow"]
+
+[[skills]]
+name = "OpenAI API"
+aliases = ["OpenAI API"]
+
+[[skills]]
+name = "Large Language Models"
+aliases = ["Large Language Models", "LLM", "LLMs"]
+
+[[skills]]
+name = "Retrieval-Augmented Generation"
+aliases = ["Retrieval-Augmented Generation", "RAG"]

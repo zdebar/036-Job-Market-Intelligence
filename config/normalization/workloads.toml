@@ -1,0 +1,11 @@
+[[workloads]]
+name = "Full-time"
+aliases = ["Full-time", "Full time"]
+
+[[workloads]]
+name = "Part-time"
+aliases = ["Part-time", "Part time"]
+
+[[workloads]]
+name = "Unspecified"
+aliases = ["Unspecified"]

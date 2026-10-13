@@ -1,0 +1,5 @@
+[hours]
+max_day = 24
+max_week = 168
+max_month = 744
+max_year = 8784

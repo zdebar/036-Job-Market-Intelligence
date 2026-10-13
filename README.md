@@ -40,10 +40,6 @@ The runner records applied SQL files in the `database_changelog` table, so
 repeated runs skip files that have already been applied. Do not modify an
 applied migration; create a new file in `db/migrations/` for each new change.
 
-Seed files are tracked as well and must use a numbered filename, for example:
-
-`002_more_reference_data.sql`.
-
 ## Basic ingestion
 
 The ingestion adapters download complete Greenhouse, Lever, and Ashby board
@@ -65,3 +61,21 @@ Each run creates a new directory under
 `data/01_bronze/<source_key>/<date>/<run_id>/` containing `response.json` and
 `metadata.json`. Raw data is ignored by Git and is not overwritten by later
 runs.
+
+## Extraction and normalization
+
+Process stored raw responses into PostgreSQL with:
+
+```powershell
+uv run job-market-parse
+```
+
+Preview discovered raw runs without a database connection:
+
+```powershell
+uv run job-market-parse --dry-run
+```
+
+The processing runner is idempotent: a raw run recorded as `processed` is
+skipped on later executions. Record-level failures are stored in
+`raw_ingestion_record_errors` and do not discard the original raw response.

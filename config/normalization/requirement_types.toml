@@ -1,0 +1,11 @@
+[[requirement_types]]
+name = "Required"
+aliases = ["Required", "Must have", "Must-have"]
+
+[[requirement_types]]
+name = "Preferred"
+aliases = ["Preferred", "Preferred qualification"]
+
+[[requirement_types]]
+name = "Nice to have"
+aliases = ["Nice to have", "Nice-to-have", "Bonus"]

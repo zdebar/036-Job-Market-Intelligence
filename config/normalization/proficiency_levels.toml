@@ -1,0 +1,15 @@
+[[proficiency_levels]]
+name = "Basic"
+aliases = ["Basic", "Beginner"]
+
+[[proficiency_levels]]
+name = "Intermediate"
+aliases = ["Intermediate"]
+
+[[proficiency_levels]]
+name = "Advanced"
+aliases = ["Advanced"]
+
+[[proficiency_levels]]
+name = "Expert"
+aliases = ["Expert"]

@@ -1,0 +1,11 @@
+[[work_modes]]
+name = "Remote"
+aliases = ["Remote", "Work from home", "Fully remote"]
+
+[[work_modes]]
+name = "Hybrid"
+aliases = ["Hybrid"]
+
+[[work_modes]]
+name = "On-site"
+aliases = ["On-site", "Onsite", "Office-based", "In-office"]

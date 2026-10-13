@@ -1,0 +1,15 @@
+[[employment_relations]]
+name = "Employee"
+aliases = ["Employee", "Employment", "HPP", "Full-time employment"]
+
+[[employment_relations]]
+name = "DPP"
+aliases = ["DPP"]
+
+[[employment_relations]]
+name = "DPC"
+aliases = ["DPC", "DPČ"]
+
+[[employment_relations]]
+name = "Self-employed"
+aliases = ["Self-employed", "Contractor", "Freelance"]

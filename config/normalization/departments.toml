@@ -1,0 +1,39 @@
+# Provisional broad categories. Unmatched provider labels stay unresolved and
+# remain available in the raw advertisement for later taxonomy work.
+
+[[departments]]
+name = "Engineering"
+aliases = ["Engineering", "Software", "RND", "RND Fintech", "RND Growth"]
+
+[[departments]]
+name = "Data & Analytics"
+aliases = ["Analytics"]
+
+[[departments]]
+name = "Go-to-Market"
+aliases = ["GTM", "GTM Fintech", "Sales", "Commercial", "Marketing"]
+
+[[departments]]
+name = "Customer Success"
+aliases = ["Customer Success", "Customer"]
+
+[[departments]]
+name = "Operations"
+aliases = [
+    "Operations",
+    "Front of House",
+    "Back of House",
+    "Mews Financial Services - Operations",
+]
+
+[[departments]]
+name = "Finance & Legal"
+aliases = ["Finance & Operations", "Legal"]
+
+[[departments]]
+name = "Asset Management"
+aliases = ["Asset Development", "Asset Monetization"]
+
+[[departments]]
+name = "Security & Compliance"
+aliases = ["IT, Security and Compliance", "Financial Services - Risk and Compliance"]
