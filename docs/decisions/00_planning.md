@@ -1,73 +1,73 @@
 # Planning
 
-## Cíl projektu
+## Project objective
 
-Vytvořit datovou platformu pro sběr, strukturování a analýzu pracovních
-nabídek.
+Build a data platform for collecting, structuring, and analyzing job postings.
 
-Projekt má sloužit jako:
+The project is intended to serve as:
 
-- praktický Data/AI Engineering projekt,
-- portfolio ukázka,
-- nástroj pro analýzu pracovního trhu.
+- a practical Data/AI Engineering project,
+- a portfolio example,
+- a tool for labor market analysis.
 
-## Základní tok dat
+## Basic data flow
 
 ```text
-zdroje
+sources
 → ingestion
 → raw storage
-→ extraction a normalization
+→ extraction and normalization
 → PostgreSQL
-→ data quality a SQL analytics
+→ data quality and SQL analytics
 → dbt Gold
 → Power BI
 → Azure
 ```
 
-## Hlavní technologie
+## Main technologies
 
-| Technologie             | Úloha                                  |
+| Technology              | Role                                   |
 | ----------------------- | -------------------------------------- |
-| Git a GitHub            | Verze kódu, spolupráce a CI/CD         |
-| Python a uv             | Aplikace, parsování a správa prostředí |
-| httpx                   | HTTP komunikace se zdroji              |
-| Docker a Docker Compose | Lokální provoz služeb                  |
-| PostgreSQL              | Provozní a analytická databáze         |
-| SQL migrace             | Řízení změn databázového schématu      |
-| pytest a Ruff           | Testy, linting a formátování           |
-| dbt                     | Analytická transformační vrstva        |
-| Power BI                | Dashboardy a prezentace analytiky      |
-| Azure                   | Cloudové uložení, běh a monitoring     |
-| LLM API                 | Pozdější AI extrakce                   |
+| Git and GitHub           | Version control, collaboration, and CI/CD |
+| Python and uv            | Application, parsing, and environment management |
+| httpx                    | HTTP communication with sources        |
+| Docker and Docker Compose | Local service runtime                 |
+| PostgreSQL               | Operational and analytical database    |
+| SQL migrations           | Database schema change management      |
+| pytest and Ruff          | Testing, linting, and formatting       |
+| dbt                      | Analytical transformation layer        |
+| Power BI                 | Dashboards and analytics presentation  |
+| Azure                    | Cloud storage, execution, and monitoring |
+| LLM API                  | Later AI extraction                    |
 
-## Postup hlavních fází
+## Main phases
 
-| Fáze | Stav | Název                          | Výsledek                                             |
-| ---- | ---- | ------------------------------ | ---------------------------------------------------- |
-| 0    | [x]  | Planning                       | Cíle, pojmy, rozsah a rozhodnutí                     |
-| 1    | [x]  | Project foundation             | Git, Python, uv, testy, linting a základní struktura |
-| 2    | [ ]  | Database foundation            | PostgreSQL, Docker, migrace a seed data              |
-| 3    | [ ]  | Basic ingestion                | Stažení dat, Raw Storage                             |
-| 4    | [ ]  | Extraction and normalization   | Převod zdrojových dat na společný formát             |
-| 5    | [ ]  | SQL analytics a data modellig  | První užitečné dotazy a reporty                      |
-| 6    | [ ]  | Data modelling / dbt           | Staging, facts, dimensions, bridges a Gold views     |
-| 7    | [ ]  | Dashboard                      | Power BI dashboard nad analytickou vrstvou           |
-| 8    | [ ]  | Cloud foundation               | Azure Storage, Azure PostgreSQL a secrets            |
-| 9    | [ ]  | Cloud orchestration            | Automatické běhy, retry, logování a monitoring       |
-| 10   | [ ]  | AI extraction                  | LLM extrakce a validace strukturovaných údajů        |
+| Phase | Status | Name                         | Outcome                                             |
+| ----- | ------ | ---------------------------- | --------------------------------------------------- |
+| 0     | [x]    | Planning                     | Objectives, terminology, scope, and decisions       |
+| 1     | [x]    | Project foundation           | Git, Python, uv, tests, linting, and basic structure |
+| 2     | [ ]    | Database foundation          | PostgreSQL, Docker, migrations, and seed data       |
+| 3     | [ ]    | Basic ingestion              | Data download and raw storage                       |
+| 4     | [ ]    | Extraction and normalization | Conversion of source data to a common format        |
+| 5     | [ ]    | SQL analytics and data modeling | First useful queries and reports                 |
+| 6     | [ ]    | Data modeling / dbt          | Staging, facts, dimensions, bridges, and Gold views |
+| 7     | [ ]    | Dashboard                   | Power BI dashboard on the analytical layer          |
+| 8     | [ ]    | Cloud foundation             | Azure Storage, Azure PostgreSQL, and secrets        |
+| 9     | [ ]    | Cloud orchestration          | Automated runs, retries, logging, and monitoring    |
 
-## Postup volitelných fází
-| Fáze | Stav | Název                          | Výsledek                                             |
-| ---- | ---- | ------------------------------ | ---------------------------------------------------- |
-| 11   | [ ]  | Optional technologies          | Databricks, PySpark, embeddings a semantic search    |
+## Optional phases
+
+| Phase | Status | Name                  | Outcome                                      |
+| ----- | ------ | --------------------- | -------------------------------------------- |
+| 10    | [ ]    | AI extraction         | LLM extraction and validation of structured data |
+| 11    | [ ]    | Optional technologies | Databricks, PySpark, embeddings, and semantic search |
 
 
-## Principy
+## Principles
 
-- Začínáme lokálně a funkční části později přesouváme do Azure.
-- Raw data se nemění a lze je znovu zpracovat.
-- Každá fáze má nejdříve jasný výsledek a test.
-- Nové technologie přidáváme pouze tehdy, když mají pro projekt smysl.
-- `035` používáme pouze jako referenci; kód přebíráme postupně podle potřeby.
-- AI, Databricks a semantic search jsou rozšíření, ne podmínka základní platformy.
+- Start locally and move functional parts to Azure later.
+- Raw data is immutable and can be reprocessed.
+- Each phase must first have a clear outcome and a test.
+- Add new technologies only when they serve a clear purpose in the project.
+- Use `035` only as a reference; adopt code incrementally as needed.
+- AI, Databricks, and semantic search are extensions, not requirements for the basic platform.

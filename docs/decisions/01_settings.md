@@ -1,22 +1,22 @@
 # Settings
 
-## Cíl
+## Objective
 
-Připravit opakovatelné lokální prostředí pro první fázi projektu podle
-`00_planning`: Git, Python, uv, základní strukturu, testy a linting.
+Prepare a reproducible local environment for the first project phase described
+in `00_planning`: Git, Python, uv, the basic structure, tests, and linting.
 
-## Stručný postup
+## Procedure
 
-1. Inicializovat Git a vytvořit základní soubory (`README.md`, `.gitignore`,
-   `.env.example`). Tajné hodnoty patří pouze do lokálního `.env` a nesmí se
-   commitovat.
-2. Zvolit a zapsat podporovanou verzi Pythonu, inicializovat projekt přes `uv`
-   a vytvořit virtuální prostředí.
-3. Založit základní strukturu `src/`, `tests/` a potřebné adresáře pro další
-   fáze.
-4. Přidat `pytest` a `ruff` jako vývojové závislosti a nastavit jejich
-   konfiguraci v `pyproject.toml`.
-5. Přidat alespoň jeden smoke test a ověřit prostředí příkazy:
+1. Initialize Git and create the basic files (`README.md`, `.gitignore`, and
+   `.env.example`). Secrets belong only in the local `.env` file and must not
+   be committed.
+2. Select and document the supported Python version, initialize the project
+   with `uv`, and create the virtual environment.
+3. Create the basic `src/` and `tests/` structure together with the directories
+   required for later phases.
+4. Add `pytest` and `ruff` as development dependencies and configure them in
+   `pyproject.toml`.
+5. Add at least one smoke test and verify the environment with:
 
    ```text
    uv run ruff format --check .
@@ -24,11 +24,17 @@ Připravit opakovatelné lokální prostředí pro první fázi projektu podle
    uv run pytest
    ```
 
-6. Teprve po úspěšném ověření uložit změny do Gitu. Docker, PostgreSQL,
-   migrace a cloudové secrets řešit až v odpovídajících pozdějších fázích.
+6. Save the changes to Git only after successful verification. Address Docker,
+   PostgreSQL, migrations, and cloud secrets in their respective later phases.
 
-## Výsledek
+## Result
 
-Projekt lze po čistém checkoutu lokálně nainstalovat přes `uv`, spustit testy a
-ověřit formátování i linting bez ruční konfigurace mimo dokumentované lokální
-hodnoty.
+After a clean checkout, the project can be installed locally with `uv`, tested,
+and checked for formatting and linting without manual configuration beyond the
+documented local values.
+
+## Language policy
+
+- Repository documentation, decision notes, code comments, user-facing CLI
+  messages, commit messages, and pull request descriptions are written in
+  English.

@@ -1,8 +1,8 @@
 # 036 – Job Market Intelligence
 
-Datová platforma pro sběr a analýzu pracovních nabídek.
+A data platform for collecting and analyzing job postings.
 
-## Technologie
+## Technology
 
 - Python
 - uv
@@ -11,7 +11,7 @@ Datová platforma pro sběr a analýzu pracovních nabídek.
 - pytest
 - Ruff
 
-## Lokální vývoj
+## Local development
 
 ```powershell
 uv sync
@@ -20,25 +20,26 @@ uv run ruff check .
 uv run ruff format --check .
 ```
 
-## Databáze
+## Database
 
-Vytvoř lokální konfiguraci z připravené šablony a spusť PostgreSQL:
+Create the local configuration from the prepared template and start PostgreSQL:
 
 ```powershell
 Copy-Item .env.example .env
 docker compose up -d postgres
 ```
 
-Migrace a seed spouštěj přes runner:
+Run migrations and seed data through the runner:
 
 ```powershell
 uv run db-migrate
 uv run db-seed
 ```
 
-Runner eviduje aplikované SQL soubory v tabulce `database_changelog`, takže
-opakované spuštění přeskočí již aplikované soubory. Již aplikovanou migraci
-neupravuj; pro další změnu vytvoř nový soubor v `db/migrations/`.
+The runner records applied SQL files in the `database_changelog` table, so
+repeated runs skip files that have already been applied. Do not modify an
+applied migration; create a new file in `db/migrations/` for each new change.
 
-Seed soubory jsou také evidované a musí mít číslovaný název, například
+Seed files are tracked as well and must use a numbered filename, for example:
+
 `002_more_reference_data.sql`.
