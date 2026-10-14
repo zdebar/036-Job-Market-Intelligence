@@ -1,0 +1,121 @@
+[0m13:45:28.316348 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002C35F413CB0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002C35EF37080>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002C35F413E90>]}
+
+
+============================== 13:45:28.323349 | 8d0d2c95-f4a5-448f-a832-4f38e6c86c79 ==============================
+[0m13:45:28.323349 [info ] [MainThread]: Running with dbt=1.12.0
+[0m13:45:28.325324 [debug] [MainThread]: running dbt with arguments {'static_parser': 'True', 'no_print': 'None', 'version_check': 'True', 'target_path': 'None', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'maximum_seed_size_mib': '1', 'printer_width': '80', 'write_json': 'True', 'introspect': 'True', 'log_cache_events': 'False', 'empty': 'None', 'cache_selected_only': 'False', 'fail_fast': 'False', 'debug': 'False', 'log_format': 'default', 'profiles_dir': 'C:\\Users\\zdeba\\.dbt', 'send_anonymous_usage_stats': 'True', 'quiet': 'False', 'warn_error': 'None', 'partial_parse': 'True', 'invocation_command': 'dbt debug', 'hints_enabled': 'True', 'use_colors': 'True', 'use_experimental_parser': 'False', 'indirect_selection': 'eager', 'log_path': 'logs'}
+[0m13:45:28.368093 [info ] [MainThread]: dbt version: 1.12.0
+[0m13:45:28.369095 [info ] [MainThread]: python version: 3.12.2
+[0m13:45:28.370073 [info ] [MainThread]: python path: D:\Active\036-Job-Market-Intelligence\.venv\Scripts\python.exe
+[0m13:45:28.371071 [info ] [MainThread]: os info: Windows-10-10.0.19045-SP0
+[0m13:45:28.485074 [info ] [MainThread]: Using profiles dir at C:\Users\zdeba\.dbt
+[0m13:45:28.486072 [info ] [MainThread]: Using profiles.yml file at C:\Users\zdeba\.dbt\profiles.yml
+[0m13:45:28.487093 [info ] [MainThread]: Using dbt_project.yml file at D:\Active\036-Job-Market-Intelligence\dbt_project.yml
+[0m13:45:28.488054 [info ] [MainThread]: adapter type: postgres
+[0m13:45:28.489072 [info ] [MainThread]: adapter version: 1.11.0
+[0m13:45:28.490072 [info ] [MainThread]: Configuration:
+[0m13:45:28.491057 [info ] [MainThread]:   profiles.yml file [[32mOK found and valid[0m]
+[0m13:45:28.491057 [info ] [MainThread]:   dbt_project.yml file [[31mERROR not found[0m]
+[0m13:45:28.493054 [info ] [MainThread]: Required dependencies:
+[0m13:45:28.495073 [debug] [MainThread]: Executing "git --help"
+[0m13:45:28.556075 [debug] [MainThread]: STDOUT: "b"usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]\n           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--no-lazy-fetch]\n           [--no-optional-locks] [--no-advice] [--bare] [--git-dir=<path>]\n           [--work-tree=<path>] [--namespace=<name>] [--config-env=<name>=<envvar>]\n           <command> [<args>]\n\nThese are common Git commands used in various situations:\n\nstart a working area (see also: git help tutorial)\n   clone      Clone a repository into a new directory\n   init       Create an empty Git repository or reinitialize an existing one\n\nwork on the current change (see also: git help everyday)\n   add        Add file contents to the index\n   mv         Move or rename a file, a directory, or a symlink\n   restore    Restore working tree files\n   rm         Remove files from the working tree and from the index\n\nexamine the history and state (see also: git help revisions)\n   bisect     Use binary search to find the commit that introduced a bug\n   diff       Show changes between commits, commit and working tree, etc\n   grep       Print lines matching a pattern\n   log        Show commit logs\n   show       Show various types of objects\n   status     Show the working tree status\n\ngrow, mark and tweak your common history\n   backfill   Download missing objects in a partial clone\n   branch     List, create, or delete branches\n   commit     Record changes to the repository\n   merge      Join two or more development histories together\n   rebase     Reapply commits on top of another base tip\n   reset      Reset current HEAD to the specified state\n   switch     Switch branches\n   tag        Create, list, delete or verify a tag object signed with GPG\n\ncollaborate (see also: git help workflows)\n   fetch      Download objects and refs from another repository\n   pull       Fetch from and integrate with another repository or a local branch\n   push       Update remote refs along with associated objects\n\n'git help -a' and 'git help -g' list available subcommands and some\nconcept guides. See 'git help <command>' or 'git help <concept>'\nto read about a specific subcommand or concept.\nSee 'git help git' for an overview of the system.\n""
+[0m13:45:28.557077 [debug] [MainThread]: STDERR: "b''"
+[0m13:45:28.558071 [info ] [MainThread]:  - git [[32mOK found[0m]
+
+[0m13:45:28.559059 [info ] [MainThread]: Connection:
+[0m13:45:28.560059 [info ] [MainThread]:   host: 127.0.0.1
+[0m13:45:28.561059 [info ] [MainThread]:   port: 15432
+[0m13:45:28.562060 [info ] [MainThread]:   user: job_market
+[0m13:45:28.563059 [info ] [MainThread]:   database: job_market_intelligence
+[0m13:45:28.564059 [info ] [MainThread]:   schema: analytics
+[0m13:45:28.565075 [info ] [MainThread]:   connect_timeout: 10
+[0m13:45:28.566055 [info ] [MainThread]:   role: None
+[0m13:45:28.567055 [info ] [MainThread]:   search_path: None
+[0m13:45:28.568055 [info ] [MainThread]:   keepalives_idle: 0
+[0m13:45:28.569058 [info ] [MainThread]:   sslmode: None
+[0m13:45:28.570054 [info ] [MainThread]:   sslcert: None
+[0m13:45:28.571059 [info ] [MainThread]:   sslkey: None
+[0m13:45:28.572058 [info ] [MainThread]:   sslrootcert: None
+[0m13:45:28.573055 [info ] [MainThread]:   application_name: dbt
+[0m13:45:28.573055 [info ] [MainThread]:   autocommit: False
+[0m13:45:28.574055 [info ] [MainThread]:   retries: 1
+[0m13:45:28.576053 [info ] [MainThread]: Registered adapter: postgres=1.11.0
+[0m13:45:29.068444 [debug] [MainThread]: Acquiring new postgres connection 'debug'
+[0m13:45:29.254425 [debug] [MainThread]: Using postgres connection "debug"
+[0m13:45:29.254425 [debug] [MainThread]: On debug: select 1 as id
+[0m13:45:29.255425 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m13:45:31.280216 [debug] [MainThread]: Postgres adapter: Got a retryable error when attempting to open a postgres connection.
+1 attempts remaining. Retrying in 0 seconds.
+Error:
+connection to server at "127.0.0.1", port 15432 failed: Connection refused (0x0000274D/10061)
+	Is the server running on that host and accepting TCP/IP connections?
+
+[0m13:45:33.318525 [debug] [MainThread]: Postgres adapter: Error running SQL: select 1 as id
+[0m13:45:33.320525 [debug] [MainThread]: Postgres adapter: Rolling back transaction.
+[0m13:45:33.321528 [debug] [MainThread]: On debug: No close available on handle
+[0m13:45:33.323524 [info ] [MainThread]:   Connection test: [[31mERROR[0m]
+
+[0m13:45:33.325564 [info ] [MainThread]: [31m2 checks failed:[0m
+[0m13:45:33.327525 [info ] [MainThread]: Project loading failed for the following reason:
+ project path <D:\Active\036-Job-Market-Intelligence\dbt_project.yml> not found
+
+[0m13:45:33.329528 [info ] [MainThread]: dbt was unable to connect to the specified database.
+The database returned the following error:
+
+  >Database Error
+  connection to server at "127.0.0.1", port 15432 failed: Connection refused (0x0000274D/10061)
+  	Is the server running on that host and accepting TCP/IP connections?
+  
+
+Check your database credentials and try again. For more information, visit:
+https://docs.getdbt.com/docs/configure-your-profile
+
+
+[0m13:45:33.334307 [debug] [MainThread]: Command `dbt debug` failed at 13:45:33.333293 after 5.45 seconds
+[0m13:45:33.336333 [debug] [MainThread]: Connection 'debug' was properly closed.
+[0m13:45:33.337333 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002C35EF37080>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002C360FDBF50>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002C35F3A7E60>]}
+[0m13:45:33.339299 [debug] [MainThread]: Flushing usage events
+[0m13:45:34.242973 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m13:49:55.182320 [error] [MainThread]: [[31mERROR[0m]: Encountered an error:
+
+[0m13:49:55.380611 [error] [MainThread]: Traceback (most recent call last):
+  File "D:\Active\036-Job-Market-Intelligence\.venv\Lib\site-packages\dbt\cli\requires.py", line 190, in wrapper
+    result, success = func(*args, **kwargs)
+                      ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Active\036-Job-Market-Intelligence\.venv\Lib\site-packages\dbt\cli\requires.py", line 113, in wrapper
+    ctx.with_resource(track_run(run_command=flags.WHICH))
+  File "D:\Active\036-Job-Market-Intelligence\.venv\Lib\site-packages\click\core.py", line 675, in with_resource
+    return self._exit_stack.enter_context(context_manager)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Program Files\Python 3\Lib\contextlib.py", line 526, in enter_context
+    result = _enter(cm)
+             ^^^^^^^^^^
+  File "D:\Program Files\Python 3\Lib\contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "D:\Active\036-Job-Market-Intelligence\.venv\Lib\site-packages\dbt\tracking.py", line 535, in track_run
+    track_invocation_start(invocation_context)
+  File "D:\Active\036-Job-Market-Intelligence\.venv\Lib\site-packages\dbt\tracking.py", line 263, in track_invocation_start
+    get_platform_context(),
+    ^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Active\036-Job-Market-Intelligence\.venv\Lib\site-packages\dbt\tracking.py", line 199, in get_platform_context
+    "platform": platform.platform(),
+                ^^^^^^^^^^^^^^^^^^^
+  File "D:\Program Files\Python 3\Lib\platform.py", line 1243, in platform
+    system, node, release, version, machine, processor = uname()
+                                                         ^^^^^^^
+  File "D:\Program Files\Python 3\Lib\platform.py", line 920, in uname
+    release, version, csd, ptype = win32_ver()
+                                   ^^^^^^^^^^^
+  File "D:\Program Files\Python 3\Lib\platform.py", line 448, in win32_ver
+    version, csd, ptype, is_client = _win32_ver(version, csd, ptype)
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Program Files\Python 3\Lib\platform.py", line 386, in _win32_ver
+    (version, product_type, ptype, spmajor, spminor)  = _wmi_query(
+                                                        ^^^^^^^^^^^
+  File "D:\Program Files\Python 3\Lib\platform.py", line 326, in _wmi_query
+    data = _wmi.exec_query("SELECT {} FROM {}".format(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
+
+[0m13:49:55.384583 [debug] [MainThread]: Command `dbt debug` failed at 13:49:55.384583 after 0.53 seconds

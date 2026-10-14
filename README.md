@@ -110,5 +110,30 @@ uv run job-market-quality --file 003_normalization_coverage.sql
 
 Reports use the normalized tables and bridge tables as their primary source.
 The `raw_advertisement` JSONB column is retained for detail and debugging;
-canonical-job matching and the final BI semantic model are deferred to later
-phases.
+canonical-job matching is completed during processing, and the dbt semantic
+layer is built in Phase 06.
+
+## dbt analytical models
+
+Phase 06 builds reusable analytical marts in the `analytics` schema. Staging
+and intermediate models remain views, while the marts used by Power BI are
+persisted tables. The dbt project is in `dbt/job_market_intelligence/`; setup
+and profile instructions are in its README.
+
+Run dbt commands from the repository root. The project-local `profiles.yml` in
+the root directory is used before any user-level dbt profile.
+
+```powershell
+uv run dbt debug --project-dir dbt/job_market_intelligence
+uv run dbt build --project-dir dbt/job_market_intelligence
+```
+
+## Project documentation
+
+The general technology and data modelling guides are collected in
+[`docs/README.md`](docs/README.md):
+
+- [Python overview](docs/python_guide.md)
+- [SQL overview](docs/sql_guide.md)
+- [dbt overview](docs/dbt_guide.md)
+- [Data modelling overview](docs/data_modelling_guide.md)

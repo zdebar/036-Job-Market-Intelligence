@@ -1,0 +1,29 @@
+version: 2
+
+models:
+  - name: int_job_postings_enriched
+    description: One row per source posting after adding canonical-job relationship and compensation attributes.
+    columns:
+      - name: job_posting_id
+        data_tests:
+          - not_null
+          - unique
+
+  - name: int_primary_job_postings
+    description: One row per active primary posting selected for a canonical job.
+    columns:
+      - name: job_posting_id
+        data_tests:
+          - not_null
+          - unique
+      - name: canonical_job_id
+        data_tests:
+          - not_null
+
+  - name: int_canonical_job_posting_counts
+    description: Posting counts and observation timestamps by canonical job.
+    columns:
+      - name: canonical_job_id
+        data_tests:
+          - not_null
+          - unique
