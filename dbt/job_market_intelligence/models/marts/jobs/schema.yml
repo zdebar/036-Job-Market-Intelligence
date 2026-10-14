@@ -1,0 +1,281 @@
+version: 2
+
+models:
+  - name: dim_company
+    description: One row per normalized company.
+    columns:
+      - name: company_id
+        data_tests:
+          - not_null
+          - unique
+
+  - name: dim_department
+    description: One row per normalized department.
+    columns:
+      - name: department_id
+        data_tests:
+          - not_null
+          - unique
+
+  - name: dim_employment_relation
+    description: One row per employment relation.
+    columns:
+      - name: employment_relation_id
+        data_tests:
+          - not_null
+          - unique
+
+  - name: dim_location
+    description: One row per normalized work location.
+    columns:
+      - name: location_id
+        data_tests:
+          - not_null
+          - unique
+
+  - name: dim_proficiency_level
+    description: One row per skill proficiency level.
+    columns:
+      - name: proficiency_level_id
+        data_tests:
+          - not_null
+          - unique
+
+  - name: dim_requirement_type
+    description: One row per skill requirement type.
+    columns:
+      - name: requirement_type_id
+        data_tests:
+          - not_null
+          - unique
+
+  - name: dim_role
+    description: One row per normalized job role.
+    columns:
+      - name: role_id
+        data_tests:
+          - not_null
+          - unique
+
+  - name: dim_seniority
+    description: One row per seniority level.
+    columns:
+      - name: seniority_id
+        data_tests:
+          - not_null
+          - unique
+
+  - name: dim_skill
+    description: One row per normalized skill.
+    columns:
+      - name: skill_id
+        data_tests:
+          - not_null
+          - unique
+
+  - name: dim_source
+    description: One row per source board.
+    columns:
+      - name: source_id
+        data_tests:
+          - not_null
+          - unique
+
+  - name: dim_work_mode
+    description: One row per work mode.
+    columns:
+      - name: work_mode_id
+        data_tests:
+          - not_null
+          - unique
+
+  - name: dim_workload
+    description: One row per workload.
+    columns:
+      - name: workload_id
+        data_tests:
+          - not_null
+          - unique
+
+  - name: fct_job_postings
+    description: One row per source job posting, including inactive history.
+    columns:
+      - name: job_posting_id
+        data_tests:
+          - not_null
+          - unique
+      - name: status
+        data_tests:
+          - not_null
+      - name: salary_min_czk_month
+        description: Lower compensation bound normalized to CZK per month.
+      - name: salary_max_czk_month
+        description: Upper compensation bound normalized to CZK per month.
+
+  - name: fct_active_job_postings
+    description: Active source job postings intended for Power BI reporting.
+    columns:
+      - name: job_posting_id
+        data_tests:
+          - not_null
+          - unique
+      - name: salary_min_czk_month
+        description: Lower compensation bound normalized to CZK per month.
+      - name: salary_max_czk_month
+        description: Upper compensation bound normalized to CZK per month.
+
+  - name: fct_canonical_jobs
+    description: One row per logical job opportunity, including inactive history.
+    columns:
+      - name: canonical_job_id
+        data_tests:
+          - not_null
+          - unique
+      - name: salary_min_czk_month
+        description: Lower compensation bound from the primary posting, normalized to CZK per month.
+      - name: salary_max_czk_month
+        description: Upper compensation bound from the primary posting, normalized to CZK per month.
+
+  - name: fct_active_canonical_jobs
+    description: Active logical job opportunities intended for Power BI reporting.
+    columns:
+      - name: canonical_job_id
+        data_tests:
+          - not_null
+          - unique
+      - name: salary_min_czk_month
+        description: Lower compensation bound from the primary posting, normalized to CZK per month.
+      - name: salary_max_czk_month
+        description: Upper compensation bound from the primary posting, normalized to CZK per month.
+
+  - name: fct_active_job_posting_skill_requirements
+    description: One row per active posting and required or preferred skill, with skill parameters.
+    columns:
+      - name: job_posting_id
+        data_tests:
+          - not_null
+      - name: skill_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_skill')
+                field: skill_id
+
+  - name: fct_active_canonical_job_skill_requirements
+    description: Skills and their parameters from the primary active posting of each canonical job.
+    columns:
+      - name: canonical_job_id
+        data_tests:
+          - not_null
+      - name: skill_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_skill')
+                field: skill_id
+
+  - name: fct_active_job_posting_employment_options
+    description: Employment and workload options for active source postings.
+    columns:
+      - name: employment_option_id
+        data_tests:
+          - not_null
+          - unique
+
+  - name: fct_active_canonical_job_employment_options
+    description: Employment and workload options from the primary active posting of each canonical job.
+    columns:
+      - name: employment_option_id
+        data_tests:
+          - not_null
+          - unique
+
+  - name: bridge_job_posting_locations
+    description: Active posting-to-location relationships, with location labels.
+    columns:
+      - name: job_posting_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('fct_active_job_postings')
+                field: job_posting_id
+
+  - name: bridge_job_posting_departments
+    description: Active posting-to-department relationships, with department labels.
+    columns:
+      - name: job_posting_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('fct_active_job_postings')
+                field: job_posting_id
+
+  - name: bridge_job_posting_work_modes
+    description: Active posting-to-work-mode relationships, with work mode labels.
+    columns:
+      - name: job_posting_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('fct_active_job_postings')
+                field: job_posting_id
+
+  - name: bridge_job_posting_skills
+    description: Active posting-to-skill relationships with proficiency and requirement parameters.
+    columns:
+      - name: job_posting_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('fct_active_job_postings')
+                field: job_posting_id
+
+  - name: bridge_canonical_job_locations
+    description: Canonical-job-to-location relationships from each primary active posting.
+    columns:
+      - name: canonical_job_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('fct_active_canonical_jobs')
+                field: canonical_job_id
+
+  - name: bridge_canonical_job_departments
+    description: Canonical-job-to-department relationships from each primary active posting.
+    columns:
+      - name: canonical_job_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('fct_active_canonical_jobs')
+                field: canonical_job_id
+
+  - name: bridge_canonical_job_work_modes
+    description: Canonical-job-to-work-mode relationships from each primary active posting.
+    columns:
+      - name: canonical_job_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('fct_active_canonical_jobs')
+                field: canonical_job_id
+
+  - name: bridge_canonical_job_skills
+    description: Canonical-job-to-skill relationships with proficiency and requirement parameters.
+    columns:
+      - name: canonical_job_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('fct_active_canonical_jobs')
+                field: canonical_job_id

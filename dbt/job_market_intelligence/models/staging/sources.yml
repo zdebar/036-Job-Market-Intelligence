@@ -1,0 +1,28 @@
+version: 2
+
+sources:
+  - name: operational
+    schema: public
+    description: Operational PostgreSQL tables populated by the application.
+    tables:
+      - name: job_postings
+      - name: job_posting_sources
+      - name: job_skill_requirements
+      - name: job_posting_locations
+      - name: job_posting_departments
+      - name: job_posting_work_modes
+      - name: job_posting_compensations
+      - name: canonical_jobs
+      - name: companies
+      - name: roles
+      - name: departments
+      - name: sources
+      - name: seniority_levels
+      - name: skills
+      - name: proficiency_levels
+      - name: requirement_types
+      - name: employment_relations
+      - name: workloads
+      - name: work_modes
+      - name: locations
+      - name: job_posting_employment_options

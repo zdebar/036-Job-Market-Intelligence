@@ -1,7 +1,9 @@
 import os
 import uuid
 from collections.abc import Generator
+from dataclasses import replace
 from datetime import UTC, datetime, timedelta
+from decimal import Decimal
 from pathlib import Path
 
 import psycopg
@@ -10,7 +12,10 @@ from dotenv import load_dotenv
 
 from job_market_intelligence.processing.database import ProcessingRepository
 from job_market_intelligence.processing.fingerprint import content_fingerprint
-from job_market_intelligence.processing.models import ParsedJobPosting
+from job_market_intelligence.processing.models import (
+    CompensationOption,
+    ParsedJobPosting,
+)
 
 PROJECT_ROOT = Path(__file__).parents[1]
 
@@ -53,6 +58,38 @@ def _posting(
         content_fingerprint=content_fingerprint(description),
         locations=("Prague, Czechia",),
     )
+
+
+def test_persists_czk_month_compensation(repository: ProcessingRepository) -> None:
+    retrieved_at = datetime.now(UTC).replace(microsecond=0)
+    suffix = uuid.uuid4().hex
+    record = replace(
+        _posting(f"test-compensation-{suffix}", retrieved_at),
+        compensation_options=(
+            CompensationOption(
+                salary_min=Decimal(1200),
+                salary_max=Decimal(1800),
+                salary_currency="EUR",
+                salary_period="year",
+            ),
+        ),
+    )
+
+    posting_id = repository.upsert_job_posting(
+        source_key="lever_ataccama",
+        record=record,
+        retrieved_at=retrieved_at,
+    )
+    row = repository.connection.execute(
+        """
+        SELECT salary_min_czk_month, salary_max_czk_month
+        FROM job_posting_compensations
+        WHERE job_posting_id = %s
+        """,
+        (posting_id,),
+    ).fetchone()
+
+    assert row == (Decimal("2437.50"), Decimal("3656.25"))
 
 
 def test_cross_source_postings_share_canonical_and_rank(

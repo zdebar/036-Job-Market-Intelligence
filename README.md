@@ -110,5 +110,43 @@ uv run job-market-quality --file 003_normalization_coverage.sql
 
 Reports use the normalized tables and bridge tables as their primary source.
 The `raw_advertisement` JSONB column is retained for detail and debugging;
-canonical-job matching and the final BI semantic model are deferred to later
-phases.
+canonical-job matching is completed during processing, and the dbt semantic
+layer is built in Phase 06.
+
+## Compensation normalization
+
+The compensation policy is defined in
+[`config/compensation.toml`](config/compensation.toml). The current analytical
+target is `CZK per month`. Original source values remain in
+`job_posting_compensations`; derived values are stored alongside them in
+`salary_min_czk_month` and `salary_max_czk_month`.
+
+The configured exchange-rate snapshot is dated `2026-10-13`. Changing the
+configuration does not silently rewrite existing rows: new or explicitly
+reprocessed postings receive the new values. A future backfill command can be
+added when a rate-policy change should be applied to historical data.
+
+## dbt analytical models
+
+Phase 06 builds reusable analytical marts in the `analytics` schema. Staging
+and intermediate models remain views, while the marts used by Power BI are
+persisted tables. The dbt project is in `dbt/job_market_intelligence/`; setup
+and profile instructions are in its README.
+
+Run dbt commands from the repository root. The project-local `profiles.yml` in
+the root directory is used before any user-level dbt profile.
+
+```powershell
+uv run dbt debug --project-dir dbt/job_market_intelligence
+uv run dbt build --project-dir dbt/job_market_intelligence
+```
+
+## Project documentation
+
+The general technology and data modelling guides are collected in
+[`docs/README.md`](docs/README.md):
+
+- [Python overview](docs/python_guide.md)
+- [SQL overview](docs/sql_guide.md)
+- [dbt overview](docs/dbt_guide.md)
+- [Data modelling overview](docs/data_modelling_guide.md)

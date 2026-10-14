@@ -1,0 +1,52 @@
+# Compensation normalization policy for analytical reporting.
+# Rates are CZK for one unit of the source currency.
+
+[target]
+currency = "CZK"
+period = "month"
+
+[fx]
+rate_date = 2026-10-13
+source = "CNB foreign exchange market rates"
+source_url = "https://www.cnb.cz/cs/financni-trhy/devizovy-trh/kurzy-devizoveho-trhu/kurzy-devizoveho-trhu/index.html?date=13.10.2026"
+
+[fx.rates]
+AUD = "15.203"
+BRL = "4.344"
+CAD = "15.300"
+CHF = "26.186"
+CNY = "3.255"
+CZK = "1"
+DKK = "3.261"
+EUR = "24.375"
+GBP = "28.863"
+HKD = "2.776"
+HUF = "0.06690"
+IDR = "0.001218"
+ILS = "7.085"
+INR = "0.22866"
+ISK = "0.17896"
+JPY = "0.13779"
+KRW = "0.01625"
+MXN = "1.188"
+MYR = "5.332"
+NOK = "2.285"
+NZD = "12.232"
+PHP = "0.34710"
+PLN = "5.569"
+RON = "4.568"
+SEK = "2.182"
+SGD = "17.023"
+THB = "0.64873"
+TRY = "0.44138"
+USD = "21.788"
+XDR = "29.484"
+ZAR = "1.320"
+
+[period_factors_to_month]
+# Hour/day/week use a 40-hour, 5-day work week (52 weeks / 12 months).
+hour = "173.333333333333333333"
+day = "21.666666666666666667"
+week = "4.333333333333333333"
+month = "1"
+year = "0.083333333333333333"
