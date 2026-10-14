@@ -20,6 +20,8 @@ grain, filtering rules, or relationships change.
 | BI consumer | Power BI |
 | Source layer | Operational PostgreSQL tables through staging models |
 | Transformation layers | Staging -> intermediate -> marts |
+| Compensation target | CZK per month |
+| Compensation policy | `config/compensation.toml` |
 
 The mart models are persisted tables. Staging and intermediate models are
 views. The default project configuration is in
@@ -275,6 +277,8 @@ inherits the source-posting columns from `int_job_postings_enriched`.
 | `salary_max` | `NUMERIC(12,2)` | Upper salary bound |
 | `salary_currency` | `TEXT` | Three-letter currency code when available |
 | `salary_period` | `TEXT` | Salary period such as month or year |
+| `salary_min_czk_month` | `NUMERIC(12,2)` | Lower bound converted to CZK per month |
+| `salary_max_czk_month` | `NUMERIC(12,2)` | Upper bound converted to CZK per month |
 
 ### `fct_active_job_postings`
 
@@ -311,11 +315,26 @@ Grain: one row per logical job opportunity, including inactive history.
 | `salary_max` | `NUMERIC(12,2)` | Salary upper bound from the primary posting |
 | `salary_currency` | `TEXT` | Currency from the primary posting |
 | `salary_period` | `TEXT` | Salary period from the primary posting |
+| `salary_min_czk_month` | `NUMERIC(12,2)` | Lower bound converted to CZK per month |
+| `salary_max_czk_month` | `NUMERIC(12,2)` | Upper bound converted to CZK per month |
 
 The canonical fact intentionally represents a logical opportunity rather than
 every source advertisement. Counts and descriptive attributes are derived from
 all associated postings, while the selected primary posting supplies the
 representative descriptive and salary fields.
+
+### Compensation policy
+
+The source salary fields are intentionally preserved because they are needed
+for traceability. The normalized fields are calculated during processing and
+are available in the posting and canonical facts for Power BI measures. If a
+rate or period is unavailable, the normalized fields remain null instead of
+being presented as a comparable zero.
+
+The configured rate date and all conversion factors are maintained in
+[`config/compensation.toml`](../config/compensation.toml). Updating that file
+affects newly processed or explicitly reprocessed records. Existing derived
+values are kept stable until a deliberate historical backfill is run.
 
 ### `fct_active_canonical_jobs`
 

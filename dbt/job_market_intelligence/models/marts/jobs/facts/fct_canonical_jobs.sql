@@ -21,7 +21,9 @@ select
     primary_posting.salary_min,
     primary_posting.salary_max,
     primary_posting.salary_currency,
-    primary_posting.salary_period
+    primary_posting.salary_period,
+    primary_posting.salary_min_czk_month,
+    primary_posting.salary_max_czk_month
 from {{ ref('stg_canonical_jobs') }} as canonical
 left join {{ ref('int_canonical_job_posting_counts') }} as counts
     on counts.canonical_job_id = canonical.canonical_job_id

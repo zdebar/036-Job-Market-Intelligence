@@ -107,6 +107,10 @@ models:
       - name: status
         data_tests:
           - not_null
+      - name: salary_min_czk_month
+        description: Lower compensation bound normalized to CZK per month.
+      - name: salary_max_czk_month
+        description: Upper compensation bound normalized to CZK per month.
 
   - name: fct_active_job_postings
     description: Active source job postings intended for Power BI reporting.
@@ -115,6 +119,10 @@ models:
         data_tests:
           - not_null
           - unique
+      - name: salary_min_czk_month
+        description: Lower compensation bound normalized to CZK per month.
+      - name: salary_max_czk_month
+        description: Upper compensation bound normalized to CZK per month.
 
   - name: fct_canonical_jobs
     description: One row per logical job opportunity, including inactive history.
@@ -123,6 +131,10 @@ models:
         data_tests:
           - not_null
           - unique
+      - name: salary_min_czk_month
+        description: Lower compensation bound from the primary posting, normalized to CZK per month.
+      - name: salary_max_czk_month
+        description: Upper compensation bound from the primary posting, normalized to CZK per month.
 
   - name: fct_active_canonical_jobs
     description: Active logical job opportunities intended for Power BI reporting.
@@ -131,6 +143,10 @@ models:
         data_tests:
           - not_null
           - unique
+      - name: salary_min_czk_month
+        description: Lower compensation bound from the primary posting, normalized to CZK per month.
+      - name: salary_max_czk_month
+        description: Upper compensation bound from the primary posting, normalized to CZK per month.
 
   - name: fct_active_job_posting_skill_requirements
     description: One row per active posting and required or preferred skill, with skill parameters.

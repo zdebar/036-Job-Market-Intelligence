@@ -40,6 +40,10 @@ models:
         data_tests:
           - not_null
           - unique
+      - name: salary_min_czk_month
+        description: Lower compensation bound normalized to CZK per month.
+      - name: salary_max_czk_month
+        description: Upper compensation bound normalized to CZK per month.
 
   - name: stg_job_posting_departments
     description: Source-conformed posting-to-department relationships.

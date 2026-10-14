@@ -9,7 +9,9 @@ select
     compensation.salary_min,
     compensation.salary_max,
     compensation.salary_currency,
-    compensation.salary_period
+    compensation.salary_period,
+    compensation.salary_min_czk_month,
+    compensation.salary_max_czk_month
 from {{ ref('stg_job_postings') }} as postings
 left join {{ ref('stg_job_posting_sources') }} as posting_source
     on posting_source.job_posting_id = postings.job_posting_id

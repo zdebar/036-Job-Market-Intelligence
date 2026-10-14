@@ -113,6 +113,19 @@ The `raw_advertisement` JSONB column is retained for detail and debugging;
 canonical-job matching is completed during processing, and the dbt semantic
 layer is built in Phase 06.
 
+## Compensation normalization
+
+The compensation policy is defined in
+[`config/compensation.toml`](config/compensation.toml). The current analytical
+target is `CZK per month`. Original source values remain in
+`job_posting_compensations`; derived values are stored alongside them in
+`salary_min_czk_month` and `salary_max_czk_month`.
+
+The configured exchange-rate snapshot is dated `2026-10-13`. Changing the
+configuration does not silently rewrite existing rows: new or explicitly
+reprocessed postings receive the new values. A future backfill command can be
+added when a rate-policy change should be applied to historical data.
+
 ## dbt analytical models
 
 Phase 06 builds reusable analytical marts in the `analytics` schema. Staging

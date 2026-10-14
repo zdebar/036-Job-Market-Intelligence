@@ -71,6 +71,13 @@ Use these marts as the normal Power BI entry points:
 - `fct_active_*_employment_options`: employment and workload options already
   attached to the posting or canonical job.
 
+Compensation marts preserve `salary_min`, `salary_max`,
+`salary_currency`, and `salary_period`, and also expose
+`salary_min_czk_month` and `salary_max_czk_month` for comparable reporting.
+The conversion policy and rate snapshot are maintained in
+`config/compensation.toml`; the operational derived columns are populated by
+the processing layer before dbt reads them.
+
 Power BI should use model relationships and dimensions for filtering. It
 should not build a single wide table by joining skills, locations, work modes,
 and departments together, because that multiplies rows. Relationship facts

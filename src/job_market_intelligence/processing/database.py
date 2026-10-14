@@ -4,11 +4,13 @@ from __future__ import annotations
 
 from collections.abc import Iterable
 from datetime import UTC, datetime
+from pathlib import Path
 from typing import Any
 
 from psycopg import Connection, sql
 from psycopg.types.json import Jsonb
 
+from job_market_intelligence.processing.compensation import CompensationNormalization
 from job_market_intelligence.processing.models import (
     CompensationOption,
     EmploymentOption,
@@ -17,12 +19,24 @@ from job_market_intelligence.processing.models import (
     SkillRequirement,
 )
 
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
+
 
 class ProcessingRepository:
     """Persist one processing run using the 036 database schema."""
 
-    def __init__(self, connection: Connection[Any]) -> None:
+    def __init__(
+        self,
+        connection: Connection[Any],
+        compensation_config_path: Path | None = None,
+    ) -> None:
         self.connection = connection
+        config_path = compensation_config_path or (
+            PROJECT_ROOT / "config" / "compensation.toml"
+        )
+        self.compensation_normalization = CompensationNormalization.from_file(
+            config_path
+        )
 
     def register_raw_run(
         self,
@@ -362,13 +376,20 @@ class ProcessingRepository:
         for compensation in compensations:
             if compensation.salary_min is None and compensation.salary_max is None:
                 continue
+            normalized = self.compensation_normalization.normalize(
+                compensation.salary_min,
+                compensation.salary_max,
+                compensation.salary_currency,
+                compensation.salary_period,
+            )
             self.connection.execute(
                 """
                 INSERT INTO job_posting_compensations (
                     job_posting_id, salary_min, salary_max,
-                    salary_currency, salary_period
+                    salary_currency, salary_period,
+                    salary_min_czk_month, salary_max_czk_month
                 )
-                VALUES (%s, %s, %s, %s, %s)
+                VALUES (%s, %s, %s, %s, %s, %s, %s)
                 """,
                 (
                     posting_id,
@@ -376,6 +397,8 @@ class ProcessingRepository:
                     compensation.salary_max,
                     compensation.salary_currency,
                     compensation.salary_period,
+                    normalized.salary_min_czk_month,
+                    normalized.salary_max_czk_month,
                 ),
             )
 
