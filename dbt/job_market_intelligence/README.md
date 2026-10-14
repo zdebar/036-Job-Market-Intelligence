@@ -33,15 +33,22 @@ Do not copy this profile to `%USERPROFILE%\.dbt\profiles.yml`. The user-level
 profile may belong to another dbt project and must not control this project.
 
 The repository also includes `.vscode/settings.json` with the dbt extension's
-v1 compatibility mode enabled. This is intentional: the project uses the
-PostgreSQL adapter through `uv`, while the standalone `dbt` executable often
-resolves to the dbt v2/Fusion installation. Run project commands through
-`uv run dbt` so they use the locked v1 environment.
+v1 compatibility mode enabled. This reduces diagnostic noise for this dbt v1
+project, but it does not make the extension's language server run dbt v1.
+Current versions of the dbt VS Code extension require a dbt v2 binary for the
+language server, so do not point the machine-level `dbt.dbtPath` setting at
+this project's `.venv\Scripts\dbt.exe`.
 
-If the dbt extension's run buttons must execute the project environment too,
-set the user-level `dbt.dbtPath` setting to the absolute path of
-`.venv\Scripts\dbt.exe` for this checkout. The setting is machine-scoped by
-the extension and therefore is not committed to the repository.
+Run this PostgreSQL project through the locked v1 environment instead:
+
+```powershell
+uv run dbt debug --project-dir dbt/job_market_intelligence
+uv run dbt build --project-dir dbt/job_market_intelligence
+```
+
+If the extension reports that PostgreSQL is unsupported, disable the dbt
+extension for this workspace. This does not affect the project CLI or its
+dbt builds.
 
 ## Commands
 
